@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+<meta name="google-signin-client_id" content="304838326056-tnt1mts3fn4r92vokj98jisodf0vhnrs.apps.googleusercontent.com">
+
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+
+</head>
+<body>
+<h1>Welcome to my Application</h1>
+<p>Please log in first to use our awsome features.</p>
+
+<script type="text/javascript">
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+  document.getElementById("user-name").innerHTML = "Welcome " + profile.getName();
+  document.getElementById("user-image-img").src = profile.getImageUrl();
+  document.getElementById("user-email").innerHTML = profile.getEmail();
+  toggleButtonVisibility();
+}
+
+function toggleButtonVisibility(){
+  var signOutButton = document.getElementById("sign-out");
+  var signInButton = document.getElementById("sign-in");
+
+  if(signOutButton.style.visibility == "visible"){
+  	signOutButton.style.visibility = "hidden"
+  }else{
+	signOutButton.style.visibility = "visible"
+  }
+
+  if(signInButton.style.visibility == "visible"){
+  	signInButton.style.visibility = "hidden"
+  }else{
+	signInButton.style.visibility = "visible"
+  }
+
+}
+</script>
+
+<div id="user-name"></div>
+<div id="user-email"></div>
+<div id="user-image"><img id="user-image-img" src=""/></div>
+
+
+<div class="g-signin2" data-onsuccess="onSignIn" id="sign-in" style="visibility:visible"></div>
+
+<a href="#" onclick="signOut();" style="visibility:hidden" id="sign-out">Sign out</a>
+<script>
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
+  
+  document.getElementById("user-name").innerHTML = "";
+  document.getElementById("user-image-img").src = "";
+  document.getElementById("user-email").innerHTML = "";
+
+  toggleButtonVisibility();
+  }
+</script>
+
+<p><em>Thank you</em></p>
+</body>
+</html>

@@ -1,0 +1,12 @@
+nginx:  
+  image: dli/nginx
+  volumes:
+   - ./data/www:/usr/share/nginx/html/www
+   - ./data/images:/usr/share/nginx/html/images
+  ports:
+   - "8080:80"
+  environment:
+   - NGINX_HOST=localhost
+   - NGINX_PORT=80
+  command: /bin/bash -c "rm -rf /var/cache/nginx/client_temp && nginx -g 'daemon off;'"
+  container_name: login-server
